@@ -1,0 +1,6 @@
+environment = "staging"
+environment_domain_prefix = "staging."
+root_domain_name = "mytld.com"
+app_domain_prefix = "app."
+default_region = "us-west-2"
+project_name = "my-app"

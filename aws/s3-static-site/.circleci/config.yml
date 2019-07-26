@@ -1,0 +1,65 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@0.1.4
+
+jobs:
+  test_and_build:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:12.6
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install dependencies required to install/manage application-used dependencies
+          command: yarn global add jest
+      - run:
+          name: Install third-party dependencies used in application code
+          command: yarn install --pure-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Tests
+          command: yarn test
+      - run:
+          name: Build application code
+          command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths: dist
+  
+  deploy:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:12.6
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-region: AWS_DEFAULT_REGION
+      - run: 
+          name: "Deploy to S3"
+          command: |
+            aws s3 sync dist/ s3://${S3_BUCKET} --delete
+            aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths /*
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - test_and_build
+      - deploy:
+          requires:
+            - test_and_build
+          filters:
+            branches:
+              only: master
