@@ -10,6 +10,8 @@ You will need to create an SSL Certificate in the AWS `us-east-1` region, which 
 
 Create your own `*.tfvars` file for each environment you would like to create infrastructure for, based on the `example.tfvars` file.
 
+To allow Terraform to maintain state, we'll create an S3 bucket. Create an S3 bucket in the region of your choice to maintain this state, then modify `main.tf` with the region and bucket name you used.
+
 ### Creating
 
 Once your certificate is created and verified in `us-east-1` and your variables have been added, you are ready to create infrastructure.
