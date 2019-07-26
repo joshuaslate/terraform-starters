@@ -29,4 +29,4 @@ terraform destroy -var-file="secrets.tfvars"
 
 ## Contribution
 
-I'm by no means an infrastructure expert, and I would love to see these starters improve, become more secure, and more scalable. If you are up top sharing your expertise, please feel free to open a pull request.
+I'm by no means an infrastructure expert, and I would love to see these starters improve, become more secure, and more scalable. If you are up to sharing your expertise, please feel free to open a pull request.
