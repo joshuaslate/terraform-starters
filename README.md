@@ -2,7 +2,7 @@
 
 This repository contains (hopefully) plug-and-play Terraform and CircleCI configurations to set up infrastructure and CI/CD pipelines for different types of applications.
 
-This is currently a work in progress and shouldn't be used in production in its current state.
+This is currently a work in progress and probably shouldn't be used in production in its current state.
 
 ## Install
 

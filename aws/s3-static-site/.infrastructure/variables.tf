@@ -10,7 +10,7 @@ variable "root_domain_name" {
 
 variable "app_domain_prefix" {
   description = "The domain prefix for the application (e.g., app., ui., admin., dashboard.), with a trailing '.'"
-  default = ""
+  default     = ""
 }
 
 variable "default_region" {
@@ -24,6 +24,6 @@ variable "project_name" {
 }
 
 variable "environment" {
-  description = "The environment this infrastructure is being created for"
+  description = "The environment this infrastructure is being created for (e.g., staging, production, development)"
   default     = "production"
 }
